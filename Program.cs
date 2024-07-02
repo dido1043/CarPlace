@@ -1,4 +1,5 @@
 using CarPlace.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarPlace
@@ -13,6 +14,19 @@ namespace CarPlace
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(connectionString));
+
+            builder.Services.AddIdentityCore<IdentityUser>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
+            builder.Services.AddAuthentication();
+            builder.Services.AddAuthorization();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -33,7 +47,7 @@ namespace CarPlace
 
 
             app.MapControllers();
-
+            
             app.Run();
         }
     }
