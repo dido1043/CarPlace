@@ -1,3 +1,4 @@
+//using CarPlace.Configuration;
 using CarPlace.Data;
 using CarPlace.Data.Models;
 using Microsoft.AspNetCore.Identity;
@@ -18,7 +19,8 @@ namespace CarPlace
 
             builder.Services.AddIdentityCore<User>()
                 .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
+                .AddApiEndpoints();
+
             builder.Services.Configure<IdentityOptions>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -26,13 +28,18 @@ namespace CarPlace
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             });
-            builder.Services.AddAuthentication();
-            builder.Services.AddAuthorization();
+
+
+            builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
+            builder.Services.AddAuthorizationBuilder();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+
+            //builder.Services.ConfigureIdentity();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -44,11 +51,14 @@ namespace CarPlace
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+
+            app.MapIdentityApi<User>();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
 
             app.MapControllers();
-            
+
             app.Run();
         }
     }
