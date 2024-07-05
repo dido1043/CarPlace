@@ -116,7 +116,7 @@ namespace CarPlace.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Cars", (string)null);
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.CarFeature", b =>
@@ -138,7 +138,7 @@ namespace CarPlace.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("CarFeatures");
+                    b.ToTable("CarFeatures", (string)null);
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.Customer", b =>
@@ -165,7 +165,7 @@ namespace CarPlace.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.Dealer", b =>
@@ -186,7 +186,7 @@ namespace CarPlace.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Dealers");
+                    b.ToTable("Dealers", (string)null);
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.Inventory", b =>
@@ -210,7 +210,7 @@ namespace CarPlace.Migrations
 
                     b.HasIndex("DealerId");
 
-                    b.ToTable("Inventory");
+                    b.ToTable("Inventory", (string)null);
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.Order", b =>
@@ -236,7 +236,7 @@ namespace CarPlace.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.Review", b =>
@@ -266,7 +266,7 @@ namespace CarPlace.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.Sale", b =>
@@ -295,7 +295,7 @@ namespace CarPlace.Migrations
 
                     b.HasIndex("DealerId");
 
-                    b.ToTable("Sales");
+                    b.ToTable("Sales", (string)null);
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.ServiceRecord", b =>
@@ -320,7 +320,7 @@ namespace CarPlace.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("ServiceRecords");
+                    b.ToTable("ServiceRecords", (string)null);
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.TestDrive", b =>
@@ -346,7 +346,7 @@ namespace CarPlace.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("TestDrives");
+                    b.ToTable("TestDrives", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
