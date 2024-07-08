@@ -36,8 +36,18 @@ namespace CarPlace
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-
+            //Add controllers
+            builder.Services.AddControllers();
+            //Add cors
+            builder.Services.AddCors(opt =>
+            {
+                opt.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod();
+                });
+            });
 
             //builder.Services.ConfigureIdentity();
             var app = builder.Build();
@@ -50,14 +60,23 @@ namespace CarPlace
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
+
+            app.UseCors("AllowAll");
 
 
             app.MapIdentityApi<User>();
-            //app.UseAuthentication();
-            //app.UseAuthorization();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
 
-            app.MapControllers();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            //app.MapControllers();
 
             app.Run();
         }
