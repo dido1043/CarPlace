@@ -1,7 +1,6 @@
 ﻿using CarPlace.Data;
+using CarPlace.Data.DTO.RequestModels;
 using CarPlace.Data.Models;
-using CarPlace.Data.Models.RequestModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,9 +38,6 @@ namespace CarPlace.Controllers
             }
             return CreatedAtAction(nameof(Register), request);
         }
-        private static void JSONDeserializer()
-        {
-
-        }
+       
     }
 }
