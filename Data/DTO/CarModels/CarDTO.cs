@@ -15,5 +15,7 @@ namespace CarPlace.Data.DTO.CarModels
         public int Year { get; set; }
         [JsonProperty("price")]
         public decimal Price { get; set; }
+        [JsonProperty("imageUrl")]
+        public string ImageUrl { get; set; }
     }
 }

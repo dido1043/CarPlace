@@ -10,5 +10,8 @@ namespace CarPlace.Models.Models
         public string Model { get; set; }
         public int Year { get; set; }
         public decimal Price { get; set; }
+        public string ImageUrl { get; set; }
+
+
     }
 }
