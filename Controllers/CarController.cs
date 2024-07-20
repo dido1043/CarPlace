@@ -55,5 +55,28 @@ namespace CarPlace.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(Add), entity);
         }
+
+        [HttpPut]
+        [Route("/cars/edit/{carId}")]
+        public async Task<IActionResult> Edit(int carId, [FromBody]CarDTO carDto)
+        {
+            if (carId != carDto.Id)
+            {
+                return BadRequest();
+            }
+            var car = await _context.Cars.FindAsync(carId);
+            if (car == null)
+            {
+                throw new Exception("Invalid car id.");
+            }
+            car.Make = carDto.Make;
+            car.Model = carDto.Model;
+            car.Year = carDto.Year;
+            car.Price = carDto.Price;
+
+            _context.Cars.Update(car);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(Edit), car);
+        }
     }
 }
