@@ -57,7 +57,7 @@ namespace CarPlace.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(Add), entity);
         }
-
+        //TODO: Add get method
         [HttpPut]
         [Route("/cars/edit/{carId}")]
         public async Task<IActionResult> Edit(int carId, [FromBody]CarDTO carDto)
@@ -80,7 +80,7 @@ namespace CarPlace.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-        //Http get method for id
+        //TODO: Http get method for id
         [HttpDelete]
         [Route("/cars/delete/{carId}")]
         public async Task<IActionResult> Delete(int carId, CarDTO carDTO)
