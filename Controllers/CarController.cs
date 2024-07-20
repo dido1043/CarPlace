@@ -3,6 +3,7 @@ using CarPlace.Data.DTO.CarModels;
 using CarPlace.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace CarPlace.Controllers
 {
@@ -27,6 +28,7 @@ namespace CarPlace.Controllers
                     Year = c.Year,
                     Price = c.Price,
                     ImageUrl = c.ImageUrl,
+                    User = c.User.UserName
                 }).ToListAsync();
 
             return CreatedAtAction(nameof(All), cars);
@@ -44,7 +46,7 @@ namespace CarPlace.Controllers
                 Year = car.Year,
                 Price = car.Price,
                 ImageUrl = car.ImageUrl,
-                
+                UserId = car.User,
 
             };
             if (!ModelState.IsValid)
@@ -97,6 +99,10 @@ namespace CarPlace.Controllers
             _context.Cars.Remove(car);
             await _context.SaveChangesAsync();
             return Ok();
+        }
+        private string GetUser()
+        {
+            return User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
         }
     }
 }
