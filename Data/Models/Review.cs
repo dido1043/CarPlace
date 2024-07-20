@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CarPlace.Data.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarPlace.Models.Models
@@ -11,9 +12,9 @@ namespace CarPlace.Models.Models
         [ForeignKey(nameof(CarId))]
         public Car Car { get; set; }
         
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
         [ForeignKey(nameof(CustomerId))]
-        public Customer Customer { get; set; }
+        public User Customer { get; set; }
         public string Content { get; set; }
         public int Rating { get; set; }
     }
