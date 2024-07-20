@@ -76,7 +76,27 @@ namespace CarPlace.Controllers
 
             _context.Cars.Update(car);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Edit), car);
+            return Ok();
+        }
+        //Http get method for id
+        [HttpDelete]
+        [Route("/cars/delete/{carId}")]
+        public async Task<IActionResult> Delete(int carId, CarDTO carDTO)
+        {
+            if (carId != carDTO.Id)
+            {
+                return BadRequest();  
+            }
+            var car = await _context.Cars.FindAsync(carId);
+
+            if (car == null)
+            {
+                throw new Exception("Invalid car!");
+            }
+
+            _context.Cars.Remove(car);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }
