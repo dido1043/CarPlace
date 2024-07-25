@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarPlace.Migrations
 {
     /// <inheritdoc />
-    public partial class editedMigrations : Migration
+    public partial class lastUp : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,18 @@ namespace CarPlace.Migrations
             migrationBuilder.DropTable(
                 name: "Customers");
 
+            migrationBuilder.DropColumn(
+                name: "Discriminator",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "FirstName",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "LastName",
+                table: "AspNetUsers");
+
             migrationBuilder.AlterColumn<string>(
                 name: "CustomerId",
                 table: "Reviews",
@@ -40,6 +52,13 @@ namespace CarPlace.Migrations
                 nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int");
+
+            migrationBuilder.AddColumn<string>(
+                name: "ImageUrl",
+                table: "Cars",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Reviews_AspNetUsers_CustomerId",
@@ -57,6 +76,10 @@ namespace CarPlace.Migrations
                 name: "FK_Reviews_AspNetUsers_CustomerId",
                 table: "Reviews");
 
+            migrationBuilder.DropColumn(
+                name: "ImageUrl",
+                table: "Cars");
+
             migrationBuilder.AlterColumn<int>(
                 name: "CustomerId",
                 table: "Reviews",
@@ -64,6 +87,25 @@ namespace CarPlace.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(450)");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Discriminator",
+                table: "AspNetUsers",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "FirstName",
+                table: "AspNetUsers",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "LastName",
+                table: "AspNetUsers",
+                type: "nvarchar(max)",
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "Customers",

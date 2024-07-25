@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarPlace.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240704145450_newUp")]
-    partial class newUp
+    [Migration("20240725204437_lastUp")]
+    partial class lastUp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,6 +98,10 @@ namespace CarPlace.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Make")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -109,15 +113,10 @@ namespace CarPlace.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Cars");
                 });
@@ -144,104 +143,6 @@ namespace CarPlace.Migrations
                     b.ToTable("CarFeatures");
                 });
 
-            modelBuilder.Entity("CarPlace.Models.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("CarPlace.Models.Models.Dealer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Dealers");
-                });
-
-            modelBuilder.Entity("CarPlace.Models.Models.Inventory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DealerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DealerId");
-
-                    b.ToTable("Inventory");
-                });
-
-            modelBuilder.Entity("CarPlace.Models.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("CarPlace.Models.Models.Review", b =>
                 {
                     b.Property<int>("Id")
@@ -257,8 +158,9 @@ namespace CarPlace.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
@@ -270,35 +172,6 @@ namespace CarPlace.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("CarPlace.Models.Models.Sale", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DealerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SaleDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("SalePrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarId");
-
-                    b.HasIndex("DealerId");
-
-                    b.ToTable("Sales");
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.ServiceRecord", b =>
@@ -324,32 +197,6 @@ namespace CarPlace.Migrations
                     b.HasIndex("CarId");
 
                     b.ToTable("ServiceRecords");
-                });
-
-            modelBuilder.Entity("CarPlace.Models.Models.TestDrive", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TestDriveDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("TestDrives");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -485,13 +332,6 @@ namespace CarPlace.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CarPlace.Models.Models.Car", b =>
-                {
-                    b.HasOne("CarPlace.Data.Models.User", null)
-                        .WithMany("FavCars")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("CarPlace.Models.Models.CarFeature", b =>
                 {
                     b.HasOne("CarPlace.Models.Models.Car", "Car")
@@ -503,47 +343,6 @@ namespace CarPlace.Migrations
                     b.Navigation("Car");
                 });
 
-            modelBuilder.Entity("CarPlace.Models.Models.Customer", b =>
-                {
-                    b.HasOne("CarPlace.Data.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("CarPlace.Models.Models.Inventory", b =>
-                {
-                    b.HasOne("CarPlace.Models.Models.Dealer", "MyProperty")
-                        .WithMany()
-                        .HasForeignKey("DealerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MyProperty");
-                });
-
-            modelBuilder.Entity("CarPlace.Models.Models.Order", b =>
-                {
-                    b.HasOne("CarPlace.Models.Models.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CarPlace.Models.Models.Customer", "MyProperty")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Car");
-
-                    b.Navigation("MyProperty");
-                });
-
             modelBuilder.Entity("CarPlace.Models.Models.Review", b =>
                 {
                     b.HasOne("CarPlace.Models.Models.Car", "Car")
@@ -552,7 +351,7 @@ namespace CarPlace.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CarPlace.Models.Models.Customer", "Customer")
+                    b.HasOne("CarPlace.Data.Models.User", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -561,25 +360,6 @@ namespace CarPlace.Migrations
                     b.Navigation("Car");
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("CarPlace.Models.Models.Sale", b =>
-                {
-                    b.HasOne("CarPlace.Models.Models.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CarPlace.Models.Models.Dealer", "Dealer")
-                        .WithMany()
-                        .HasForeignKey("DealerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Car");
-
-                    b.Navigation("Dealer");
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.ServiceRecord", b =>
@@ -591,25 +371,6 @@ namespace CarPlace.Migrations
                         .IsRequired();
 
                     b.Navigation("Car");
-                });
-
-            modelBuilder.Entity("CarPlace.Models.Models.TestDrive", b =>
-                {
-                    b.HasOne("CarPlace.Models.Models.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CarPlace.Models.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Car");
-
-                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -661,11 +422,6 @@ namespace CarPlace.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CarPlace.Data.Models.User", b =>
-                {
-                    b.Navigation("FavCars");
                 });
 #pragma warning restore 612, 618
         }

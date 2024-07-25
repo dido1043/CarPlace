@@ -110,15 +110,10 @@ namespace CarPlace.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Cars");
                 });
@@ -334,13 +329,6 @@ namespace CarPlace.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CarPlace.Models.Models.Car", b =>
-                {
-                    b.HasOne("CarPlace.Data.Models.User", null)
-                        .WithMany("FavCars")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("CarPlace.Models.Models.CarFeature", b =>
                 {
                     b.HasOne("CarPlace.Models.Models.Car", "Car")
@@ -431,11 +419,6 @@ namespace CarPlace.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CarPlace.Data.Models.User", b =>
-                {
-                    b.Navigation("FavCars");
                 });
 #pragma warning restore 612, 618
         }
