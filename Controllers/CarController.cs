@@ -36,7 +36,7 @@ namespace CarPlace.Controllers
         }
         [HttpPost]
         [Route("/cars/add")]
-        public async Task<IActionResult> Add(CarDTO car)
+        public async Task<IActionResult> Add([FromBody]CarDTO car)
         {
 
             var entity = new Car()
@@ -100,9 +100,6 @@ namespace CarPlace.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-        private string GetUser()
-        {
-            return User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
-        }
+
     }
 }
