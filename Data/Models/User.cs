@@ -5,7 +5,7 @@ namespace CarPlace.Data.Models
 {
     public class User:IdentityUser
     {
-        public ICollection<Car> FavCars { get; set; }
+       
 
     }
 }
