@@ -21,7 +21,7 @@ namespace CarPlace.Controllers
                 throw new Exception("Invalid car");
             }
             //TODO
-            var favList = _context.Cars.Select(u => u.User.FavCars).ToList();
+            //var favList = _context.Cars.Select(u => u.User.FavCars).ToList();
             //favList.Add();
             return View();
         }

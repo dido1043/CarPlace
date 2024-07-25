@@ -7,6 +7,7 @@ using System.Security.Claims;
 
 namespace CarPlace.Controllers
 {
+   
     public class CarController : Controller
     {
         private readonly AppDbContext _context;
@@ -28,7 +29,7 @@ namespace CarPlace.Controllers
                     Year = c.Year,
                     Price = c.Price,
                     ImageUrl = c.ImageUrl,
-                    User = c.User.UserName
+
                 }).ToListAsync();
 
             return CreatedAtAction(nameof(All), cars);
@@ -46,7 +47,6 @@ namespace CarPlace.Controllers
                 Year = car.Year,
                 Price = car.Price,
                 ImageUrl = car.ImageUrl,
-                UserId = car.User,
 
             };
             if (!ModelState.IsValid)
