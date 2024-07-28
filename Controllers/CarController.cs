@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace CarPlace.Controllers
 {
-   
+    [Route("[controller]")]
     public class CarController : Controller
     {
         private readonly AppDbContext _context;
@@ -83,12 +83,9 @@ namespace CarPlace.Controllers
         //TODO: Http get method for id
         [HttpDelete]
         [Route("/cars/delete/{carId}")]
-        public async Task<IActionResult> Delete(int carId, CarDTO carDTO)
+        public async Task<IActionResult> Delete(int carId)
         {
-            if (carId != carDTO.Id)
-            {
-                return BadRequest();  
-            }
+           
             var car = await _context.Cars.FindAsync(carId);
 
             if (car == null)

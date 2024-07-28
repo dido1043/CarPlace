@@ -11,5 +11,6 @@ namespace CarPlace.Models.Models
         public int Year { get; set; }
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }
+        //ToDo:Add description and hp data
     }
 }
