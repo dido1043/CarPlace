@@ -29,7 +29,8 @@ namespace CarPlace.Controllers
                     Year = c.Year,
                     Price = c.Price,
                     ImageUrl = c.ImageUrl,
-
+                    HP = c.HP,
+                    Description = c.Description,
                 }).ToListAsync();
 
             return CreatedAtAction(nameof(All), cars);
@@ -47,7 +48,8 @@ namespace CarPlace.Controllers
                 Year = car.Year,
                 Price = car.Price,
                 ImageUrl = car.ImageUrl,
-
+                HP = car.HP,
+                Description= car.Description,
             };
             if (!ModelState.IsValid)
             {
@@ -57,15 +59,12 @@ namespace CarPlace.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(Add), entity);
         }
-        //TODO: Add get method
+
         [HttpPut]
         [Route("/cars/edit/{carId}")]
-        public async Task<IActionResult> Edit(int carId, [FromBody]CarDTO carDto)
+        public async Task<IActionResult> Edit(int carId, CarDTO carDto)
         {
-            if (carId != carDto.Id)
-            {
-                return BadRequest();
-            }
+            
             var car = await _context.Cars.FindAsync(carId);
             if (car == null)
             {
@@ -75,12 +74,14 @@ namespace CarPlace.Controllers
             car.Model = carDto.Model;
             car.Year = carDto.Year;
             car.Price = carDto.Price;
-
+            car.ImageUrl = carDto.ImageUrl;
+            car.HP = carDto.HP;
+            car.Description = carDto.Description;
             _context.Cars.Update(car);
             await _context.SaveChangesAsync();
             return Ok();
         }
-        //TODO: Http get method for id
+
         [HttpDelete]
         [Route("/cars/delete/{carId}")]
         public async Task<IActionResult> Delete(int carId)
