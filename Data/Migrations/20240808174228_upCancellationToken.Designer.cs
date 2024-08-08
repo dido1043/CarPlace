@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarPlace.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240807142613_upRoles")]
-    partial class upRoles
+    [Migration("20240808174228_upCancellationToken")]
+    partial class upCancellationToken
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

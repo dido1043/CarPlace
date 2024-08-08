@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarPlace.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240807201443_upUserRoles")]
-    partial class upUserRoles
+    [Migration("20240808174725_upCancellationTokenForRoles")]
+    partial class upCancellationTokenForRoles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -318,13 +318,6 @@ namespace CarPlace.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "24b66367-f65b-4c07-9535-9b4a594c1db0",
-                            RoleId = "0ba69efc-63fa-485a-b203-df47d176ade9"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

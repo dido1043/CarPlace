@@ -315,13 +315,6 @@ namespace CarPlace.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "24b66367-f65b-4c07-9535-9b4a594c1db0",
-                            RoleId = "0ba69efc-63fa-485a-b203-df47d176ade9"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

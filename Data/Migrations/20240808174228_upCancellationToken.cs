@@ -5,7 +5,7 @@
 namespace CarPlace.Migrations
 {
     /// <inheritdoc />
-    public partial class upRoles : Migration
+    public partial class upCancellationToken : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
