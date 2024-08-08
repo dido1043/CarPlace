@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarPlace.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240805193835_addRoles")]
-    partial class addRoles
+    [Migration("20240807142613_upRoles")]
+    partial class upRoles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -231,20 +231,6 @@ namespace CarPlace.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "bd633de8-13f1-41b0-a638-cdb1d58d44b3",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "8688d41b-9d42-4625-bb09-12a9bdc7ee99",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
