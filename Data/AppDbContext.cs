@@ -1,10 +1,11 @@
-﻿using CarPlace.Config;
+﻿
 using CarPlace.Data.Models;
 using CarPlace.Models.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
+using System.Reflection.Emit;
 
 namespace CarPlace.Data
 {
@@ -18,7 +19,13 @@ namespace CarPlace.Data
         public DbSet<ServiceRecord> ServiceRecords { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new UserRoleConfig());
+            builder.Entity<User>().ToTable("AspNetUsers");
+            builder.Entity<IdentityRole>().ToTable("AspNetRoles");
+
+            builder.Entity<User>(b => b.Property(u => u.ConcurrencyStamp).IsConcurrencyToken());
+
+            builder.Entity<IdentityRole>().Property(r => r.ConcurrencyStamp)
+            .IsConcurrencyToken();
             base.OnModelCreating(builder);
             
         }

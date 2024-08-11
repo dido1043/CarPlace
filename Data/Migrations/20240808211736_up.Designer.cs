@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarPlace.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240803104706_addedHPAndDescription")]
-    partial class addedHPAndDescription
+    [Migration("20240808211736_up")]
+    partial class up
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

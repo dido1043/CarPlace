@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarPlace.Migrations
 {
     /// <inheritdoc />
-    public partial class lastUp : Migration
+    public partial class up : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,18 +33,6 @@ namespace CarPlace.Migrations
             migrationBuilder.DropTable(
                 name: "Customers");
 
-            migrationBuilder.DropColumn(
-                name: "Discriminator",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "FirstName",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "LastName",
-                table: "AspNetUsers");
-
             migrationBuilder.AlterColumn<string>(
                 name: "CustomerId",
                 table: "Reviews",
@@ -54,11 +42,38 @@ namespace CarPlace.Migrations
                 oldType: "int");
 
             migrationBuilder.AddColumn<string>(
+                name: "Description",
+                table: "Cars",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<int>(
+                name: "HP",
+                table: "Cars",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AddColumn<string>(
                 name: "ImageUrl",
                 table: "Cars",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CarFeatures_CarId",
+                table: "CarFeatures",
+                column: "CarId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_CarFeatures_Cars_CarId",
+                table: "CarFeatures",
+                column: "CarId",
+                principalTable: "Cars",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Reviews_AspNetUsers_CustomerId",
@@ -73,8 +88,24 @@ namespace CarPlace.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
+                name: "FK_CarFeatures_Cars_CarId",
+                table: "CarFeatures");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_Reviews_AspNetUsers_CustomerId",
                 table: "Reviews");
+
+            migrationBuilder.DropIndex(
+                name: "IX_CarFeatures_CarId",
+                table: "CarFeatures");
+
+            migrationBuilder.DropColumn(
+                name: "Description",
+                table: "Cars");
+
+            migrationBuilder.DropColumn(
+                name: "HP",
+                table: "Cars");
 
             migrationBuilder.DropColumn(
                 name: "ImageUrl",
@@ -88,44 +119,18 @@ namespace CarPlace.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(450)");
 
-            migrationBuilder.AddColumn<string>(
-                name: "Discriminator",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<string>(
-                name: "FirstName",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "LastName",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Customers_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -244,11 +249,6 @@ namespace CarPlace.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Customers_UserId",
-                table: "Customers",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_DealerId",

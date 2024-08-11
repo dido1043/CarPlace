@@ -122,7 +122,7 @@ namespace CarPlace.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Cars", (string)null);
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.CarFeature", b =>
@@ -144,7 +144,7 @@ namespace CarPlace.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("CarFeatures");
+                    b.ToTable("CarFeatures", (string)null);
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.Review", b =>
@@ -175,7 +175,7 @@ namespace CarPlace.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("CarPlace.Models.Models.ServiceRecord", b =>
@@ -200,7 +200,7 @@ namespace CarPlace.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("ServiceRecords");
+                    b.ToTable("ServiceRecords", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
