@@ -1,6 +1,7 @@
 //using CarPlace.Configuration;
 using CarPlace.Data;
 using CarPlace.Data.Models;
+using CarPlace.Filters;
 using CarPlace.Managers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +12,7 @@ namespace CarPlace
 {
     public class Program
     {
-        public  static async Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -27,37 +28,14 @@ namespace CarPlace
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
+
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddApiEndpoints();
-            //builder.Services.AddScoped<UserManager<User>, CustomUserManager<User>>();
-            //builder.Services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
-
-            //}).AddJwtBearer(opt =>
-            //{
-            //    opt.TokenValidationParameters = new TokenValidationParameters()
-            //    {
-            //        ValidateIssuer = true,
-            //        ValidIssuer = builder.Configuration["JWT:Issuer"],
-            //        ValidateAudience = true,
-            //        ValidAudience = builder.Configuration["JWT:Audience"],
-            //        ValidateIssuerSigningKey = true,
-            //        IssuerSigningKey = new SymmetricSecurityKey(
-            //         System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
-            //        )
-            //    };
-            //});
 
             builder.Services.AddAuthentication();//.AddBearerToken(IdentityConstants.BearerScheme);
-            builder.Services.AddAuthorizationBuilder();
+            builder.Services.AddAuthorization();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -74,7 +52,11 @@ namespace CarPlace
                        .AllowAnyMethod();
                 });
             });
-
+            //Remove 2FA
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.OperationFilter<IgnorePropertiesFilter>();
+            });
             //builder.Services.ConfigureIdentity();
             var app = builder.Build();
 
