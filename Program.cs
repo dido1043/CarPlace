@@ -32,9 +32,11 @@ namespace CarPlace
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
-                .AddApiEndpoints();
+                .AddApiEndpoints()
+                .AddDefaultTokenProviders();
 
-            builder.Services.AddAuthentication();//.AddBearerToken(IdentityConstants.BearerScheme);
+
+            builder.Services.AddAuthentication();
             builder.Services.AddAuthorization();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
