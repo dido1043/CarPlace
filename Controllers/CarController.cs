@@ -1,6 +1,7 @@
 ﻿using CarPlace.Data;
 using CarPlace.Data.DTO.CarModels;
 using CarPlace.Models.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -8,6 +9,7 @@ using System.Security.Claims;
 namespace CarPlace.Controllers
 {
     [Route("[controller]")]
+    
     public class CarController : Controller
     {
         private readonly AppDbContext _context;

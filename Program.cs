@@ -59,6 +59,14 @@ namespace CarPlace
             {
                 options.OperationFilter<IgnorePropertiesFilter>();
             });
+            //Set authorization
+            //builder.Services.AddSwaggerGen(opt =>
+            //{
+            //    opt.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+            //    {
+
+            //    });
+            //});
             //builder.Services.ConfigureIdentity();
             var app = builder.Build();
 
