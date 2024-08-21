@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace CarPlace
 {
@@ -60,13 +61,35 @@ namespace CarPlace
                 options.OperationFilter<IgnorePropertiesFilter>();
             });
             //Set authorization
-            //builder.Services.AddSwaggerGen(opt =>
-            //{
-            //    opt.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
-            //    {
+            builder.Services.AddSwaggerGen(opt =>
+            {
+                opt.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "CarPlace",
+                    Version = "v1.0.0"
+                });
+                var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "Using the Authorization header with the Bearer scheme.",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
 
-            //    });
-            //});
+                opt.AddSecurityDefinition("Bearer", securitySchema);
+
+                opt.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                   {
+                     { securitySchema, new[] { "Bearer" } }
+                   });
+
+            });
             //builder.Services.ConfigureIdentity();
             var app = builder.Build();
 
