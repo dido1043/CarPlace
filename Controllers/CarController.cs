@@ -9,7 +9,7 @@ using System.Security.Claims;
 namespace CarPlace.Controllers
 {
     [Route("[controller]")]
-    [Authorize(Roles = "Client")]
+    
     public class CarController : Controller
     {
         private readonly AppDbContext _context;
