@@ -60,36 +60,62 @@ namespace CarPlace
             {
                 options.OperationFilter<IgnorePropertiesFilter>();
             });
-            //Set authorization
-            builder.Services.AddSwaggerGen(opt =>
+            ////Set authorization
+            //builder.Services.AddSwaggerGen(opt =>
+            //{
+            //    opt.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+            //    {
+            //        Title = "CarPlace",
+            //        Version = "v1.0.0"
+            //    });
+            //    var securitySchema = new OpenApiSecurityScheme
+            //    {
+            //        Description = "Using the Authorization header with the Bearer scheme.",
+            //        Name = "Authorization",
+            //        In = ParameterLocation.Header,
+            //        Type = SecuritySchemeType.Http,
+            //        Scheme = "bearer",
+            //        Reference = new OpenApiReference
+            //        {
+            //            Type = ReferenceType.SecurityScheme,
+            //            Id = "Bearer"
+            //        }
+            //    };
+
+            //    opt.AddSecurityDefinition("Bearer", securitySchema);
+
+            //    opt.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            //       {
+            //         { securitySchema, new[] { "Bearer" } }
+            //       });
+
+            //});
+
+            //JWT
+            builder.Services.AddAuthentication(options =>
             {
-                opt.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    Title = "CarPlace",
-                    Version = "v1.0.0"
-                });
-                var securitySchema = new OpenApiSecurityScheme
-                {
-                    Description = "Using the Authorization header with the Bearer scheme.",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer",
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
+                    ValidateIssuer = true,
+                    ValidIssuer = builder.Configuration["JWT:Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = builder.Configuration["JWT:Audience"],
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                     System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
+                    )
                 };
-
-                opt.AddSecurityDefinition("Bearer", securitySchema);
-
-                opt.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                   {
-                     { securitySchema, new[] { "Bearer" } }
-                   });
-
             });
+
             //builder.Services.ConfigureIdentity();
             var app = builder.Build();
 
