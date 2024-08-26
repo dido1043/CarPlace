@@ -36,9 +36,6 @@ namespace CarPlace.Controllers
             
             var result = await _userManager.CreateAsync(appUser, request.Password);
 
-
-
-
             return CreatedAtAction(nameof(Register), request);
         }
         [HttpPost]
