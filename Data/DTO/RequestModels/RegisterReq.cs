@@ -2,7 +2,7 @@
 
 namespace CarPlace.Data.DTO.RequestModels
 {
-    public class LoginRequest
+    public class RegisterReq
     {
         [JsonProperty("email")]
         public string Email { get; set; }
