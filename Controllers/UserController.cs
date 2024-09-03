@@ -1,29 +1,28 @@
 ﻿using CarPlace.Data;
 using CarPlace.Data.DTO.CarModels;
+using CarPlace.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarPlace.Controllers
 {
     public class UserController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly AppDbContext _context;
-        public UserController(AppDbContext context)
+        public UserController(AppDbContext context, UserManager<User> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
-        [HttpPost]
-        [Route("/user/fav/{carId}")]
-        public async Task<IActionResult> AddFavCar(int carId)
+        [HttpGet]
+        [Route("/me")]
+        public async Task<ActionResult<string>> Me(string email)
         {
-            var favCar = await _context.Cars.FindAsync(carId);
-            if (favCar == null)
-            {
-                throw new Exception("Invalid car");
-            }
-            //TODO
-            //var favList = _context.Cars.Select(u => u.User.FavCars).ToList();
-            //favList.Add();
-            return View();
+            var user = await _userManager.FindByEmailAsync(email);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return roles.FirstOrDefault();
         }
 
     }
