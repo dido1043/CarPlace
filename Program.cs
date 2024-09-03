@@ -23,6 +23,8 @@ namespace CarPlace
             builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(connectionString));
 
             builder.Services.AddScoped<UserManager<User>, CustomUserManager<User>>();
+            builder.Services.AddScoped<SignInManager<User>, CustomSignInManager<User>>();
+
             builder.Services.AddIdentityApiEndpoints<User>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -35,7 +37,6 @@ namespace CarPlace
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddApiEndpoints()
                 .AddDefaultTokenProviders();
-
 
             builder.Services.AddAuthentication();
             builder.Services.AddAuthorization();
@@ -90,8 +91,16 @@ namespace CarPlace
                    });
 
             });
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login"; // If you have a custom login path
+                options.LogoutPath = "/Account/Logout";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.SlidingExpiration = true;
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Set this based on your environment
+            });
 
-           
 
             //builder.Services.ConfigureIdentity();
             var app = builder.Build();
@@ -110,7 +119,7 @@ namespace CarPlace
             app.UseCors("AllowAll");
 
 
-            app.MapIdentityApi<User>();
+            app.MapCustomizedIdentityApi<User>();
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -119,6 +128,7 @@ namespace CarPlace
             {
                 endpoints.MapControllers();
             });
+            
             using (var scope = app.Services.CreateScope())
             {
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
