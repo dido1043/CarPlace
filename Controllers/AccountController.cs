@@ -77,7 +77,7 @@ namespace CarPlace.Controllers
                     RefreshToken = refreshToken,
                     Role = role,
                 };
-                return Ok(response);
+                return Ok();
             }
             catch (Exception)
             {
