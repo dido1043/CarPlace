@@ -38,7 +38,6 @@ namespace CarPlace.Controllers
         }
         [HttpPost]
         [Route("/cars/add")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add([FromBody]CarDTO car)
         {
 
@@ -64,7 +63,7 @@ namespace CarPlace.Controllers
 
         [HttpPut]
         [Route("/cars/edit/{carId}")]
-        [Authorize(Roles = "Admin")]
+        
         public async Task<IActionResult> Edit(int carId, CarDTO carDto)
         {
             
@@ -87,7 +86,6 @@ namespace CarPlace.Controllers
 
         [HttpDelete]
         [Route("/cars/delete/{carId}")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int carId)
         {
            
