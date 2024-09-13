@@ -40,7 +40,10 @@ namespace CarPlace.Controllers
             var currentCar = await _context.Cars.FindAsync(review.CarId);
 
             var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            
+            if (currentUserId == null)
+            {
+                return Unauthorized();
+            }
             if (currentCar == null)
             {
                 return NotFound("Car not found");
