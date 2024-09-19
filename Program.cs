@@ -109,6 +109,7 @@ namespace CarPlace
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
+                
                 app.UseSwaggerUI();
             }
 

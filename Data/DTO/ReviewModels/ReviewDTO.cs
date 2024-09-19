@@ -10,6 +10,8 @@ namespace CarPlace.Data.DTO.ReviewModels
 {
     public class ReviewDTO
     {
+        [JsonProperty("id")]
+        public int Id { get; set; }
         [JsonProperty("carId")]
         public int CarId { get; set; }
         [JsonProperty("customer")]
