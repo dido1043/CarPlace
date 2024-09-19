@@ -3,8 +3,8 @@ using CarPlace.Data.DTO.ReviewModels;
 using CarPlace.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System.Security.Claims;
-using System.Security.Policy;
 
 namespace CarPlace.Controllers
 {
@@ -21,15 +21,13 @@ namespace CarPlace.Controllers
         [Route("cars/reviews/all")]
         public async Task<IActionResult> All()
         {
-            var currentUser = User.Identity?.Name;
             var reviews = await _context.Reviews.Select(c => new ReviewDTO
             {
-
+                Id = c.Id,
                 CarId = c.CarId,
-                Customer = currentUser,
+                Customer = _context.Users.FirstOrDefault(u => u.Id == c.CustomerId).UserName,
                 Content = c.Content,
                 Rating = c.Rating,
-
             }).ToListAsync();
             return Ok(reviews);
         }
@@ -58,6 +56,40 @@ namespace CarPlace.Controllers
             await _context.SaveChangesAsync();
             return Ok(reviewEntity);
         }
+        [HttpPut]
+        [Route("cars/reviews/edit/{reviewId}")]
+        public async Task<IActionResult> Edit(int reviewId, ReviewDTO reviewDto)
+        {
+            var review = await _context.Reviews.FindAsync(reviewId);
+            if (review == null)
+            {
+                throw new Exception("Invalid review.");
+            }
 
+            review.Content = reviewDto.Content;
+            review.Rating = reviewDto.Rating;
+
+            _context.Reviews.Update(review);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("/cars/reviews/delete/{reviewId}")]
+        public async Task<IActionResult> Delete(int reviewId)
+        {
+
+            var review = await _context.Reviews.FindAsync(reviewId);
+
+            if (review == null)
+            {
+                throw new Exception("Invalid review!");
+            }
+
+            _context.Reviews.Remove(review);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
