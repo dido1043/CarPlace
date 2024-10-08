@@ -25,5 +25,13 @@ namespace CarPlace.Controllers
             return roles.FirstOrDefault();
         }
 
+        [HttpGet]
+        [Route("/id")]
+        public async Task<ActionResult<string>> Id(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return user.Id;
+        }
+
     }
 }
