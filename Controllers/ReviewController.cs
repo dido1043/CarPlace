@@ -18,7 +18,7 @@ namespace CarPlace.Controllers
         }
 
         [HttpGet]
-        [Route("cars/reviews/all")]
+        [Route("/cars/reviews/all")]
         public async Task<IActionResult> All()
         {
             var reviews = await _context.Reviews.Select(c => new ReviewDTO
@@ -32,13 +32,11 @@ namespace CarPlace.Controllers
             return Ok(reviews);
         }
         [HttpPost]
-        [Route("cars/reviews/add")]
+        [Route("/cars/reviews/add")]
         public async Task<IActionResult> Add([FromBody] ReviewDTO review)
         {
             var currentCar = await _context.Cars.FindAsync(review.CarId);
 
-            var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var currentUser = User.Identity?.Name;
             if (currentCar == null)
             {
                 return NotFound("Car not found");
@@ -47,7 +45,7 @@ namespace CarPlace.Controllers
             var reviewEntity = new Review
             {
                 CarId = currentCar.Id,
-                CustomerId = currentUserId,
+                CustomerId = review.Customer,
                 Content = review.Content,
                 Rating = review.Rating,
             };
@@ -57,7 +55,7 @@ namespace CarPlace.Controllers
             return Ok(reviewEntity);
         }
         [HttpPut]
-        [Route("cars/reviews/edit/{reviewId}")]
+        [Route("/cars/reviews/edit/{reviewId}")]
         public async Task<IActionResult> Edit(int reviewId, ReviewDTO reviewDto)
         {
             var review = await _context.Reviews.FindAsync(reviewId);
