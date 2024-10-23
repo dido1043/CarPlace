@@ -1,10 +1,4 @@
-﻿using CarPlace.Data.Models;
-using CarPlace.Models.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-using Newtonsoft.Json;
-using System.Runtime.InteropServices.JavaScript;
+﻿using Newtonsoft.Json;
 
 namespace CarPlace.Data.DTO.ReviewModels
 {
@@ -18,7 +12,7 @@ namespace CarPlace.Data.DTO.ReviewModels
         public string Customer { get; set; }
         [JsonProperty("content")]
         public string Content { get; set; }
-        [JsonProperty("property")]
+        [JsonProperty("rating")]
         public int Rating { get; set; }
     }
 }
