@@ -35,7 +35,7 @@ namespace CarPlace.Controllers
                 }).ToListAsync();
 
             return CreatedAtAction(nameof(All), cars);
-        }
+         }
         [HttpPost]
         [Route("/cars/add")]
         public async Task<IActionResult> Add([FromBody]CarDTO car)
