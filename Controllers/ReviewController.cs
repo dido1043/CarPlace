@@ -42,8 +42,9 @@ namespace CarPlace.Controllers
                 return NotFound("Car not found");
             }
 
-            var reviewEntity = new Review
+            var reviewEntity = new Review()
             {
+                Id = review.Id,
                 CarId = currentCar.Id,
                 CustomerId = review.Customer,
                 Content = review.Content,
@@ -56,7 +57,7 @@ namespace CarPlace.Controllers
         }
         [HttpPut]
         [Route("/cars/reviews/edit/{reviewId}")]
-        public async Task<IActionResult> Edit(int reviewId, ReviewDTO reviewDto)
+        public async Task<IActionResult> Edit(int reviewId, [FromBody]ReviewDTO reviewDto)
         {
             var review = await _context.Reviews.FindAsync(reviewId);
             if (review == null)
