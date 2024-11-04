@@ -17,6 +17,7 @@ namespace CarPlace.Data
         public DbSet<CarFeature> CarFeatures { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<ServiceRecord> ServiceRecords { get; set; }
+        public DbSet<RentRequest> RentRequests { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<User>().ToTable("AspNetUsers");
