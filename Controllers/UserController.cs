@@ -33,5 +33,12 @@ namespace CarPlace.Controllers
             return user.Id;
         }
 
+        [HttpGet]
+        [Route("/all")]
+        public async Task<List<User>> AllUsers()
+        {
+            var users = _userManager.Users;
+            return users.ToList();
+        }
     }
 }
