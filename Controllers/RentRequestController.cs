@@ -5,6 +5,7 @@ using CarPlace.Models.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 using static System.Net.WebRequestMethods;
 
 namespace CarPlace.Controllers
@@ -55,5 +56,16 @@ namespace CarPlace.Controllers
             await _context.SaveChangesAsync();
             return Ok(requestModel);
         }
+        [HttpDelete]
+        [Route("cars/requests/delete/{requestId}")]
+        public async Task<IActionResult> DeleteRequest(int requestId)
+        {
+            var request = await _context.RentRequests.FindAsync(requestId);       
+
+            _context.RentRequests.Remove(request);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
+
 }

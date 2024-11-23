@@ -47,15 +47,17 @@ namespace CarPlace
             //Add controllers
             builder.Services.AddControllers();
             //Add cors
-            builder.Services.AddCors(opt =>
+            builder.Services.AddCors(options =>
             {
-                opt.AddPolicy("AllowAll", builder =>
+                options.AddPolicy("AllowReactApp", policy =>
                 {
-                    builder.AllowAnyOrigin()
-                       .AllowAnyHeader()
-                       .AllowAnyMethod();
+                    policy.WithOrigins("http://localhost:3000") // Frontend URL
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                         
                 });
             });
+
             //Remove 2FA
             builder.Services.AddSwaggerGen(options =>
             {
@@ -109,7 +111,7 @@ namespace CarPlace
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                
+
                 app.UseSwaggerUI();
             }
 
@@ -117,7 +119,7 @@ namespace CarPlace
             app.UseStaticFiles();
             app.UseRouting();
 
-            app.UseCors("AllowAll");
+            app.UseCors("AllowReactApp");
 
 
             app.MapCustomizedIdentityApi<User>();
@@ -129,7 +131,7 @@ namespace CarPlace
             {
                 endpoints.MapControllers();
             });
-            
+
             using (var scope = app.Services.CreateScope())
             {
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();

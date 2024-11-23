@@ -64,7 +64,7 @@ namespace CarPlace.Controllers
         [HttpPut]
         [Route("/cars/edit/{carId}")]
         
-        public async Task<IActionResult> Edit(int carId, CarDTO carDto)
+        public async Task<IActionResult> Edit(int carId, [FromForm]CarDTO carDto)
         {
             
             var car = await _context.Cars.FindAsync(carId);
@@ -76,9 +76,10 @@ namespace CarPlace.Controllers
             car.Model = carDto.Model;
             car.Year = carDto.Year;
             car.Price = carDto.Price;
-            car.ImageUrl = carDto.ImageUrl;
+            //car.ImageUrl = carDto.ImageUrl;
             car.HP = carDto.HP;
             car.Description = carDto.Description;
+
             _context.Cars.Update(car);
             await _context.SaveChangesAsync();
             return Ok();
