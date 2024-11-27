@@ -1,12 +1,8 @@
 ﻿using CarPlace.Data;
 using CarPlace.Data.DTO.RentRequestModel;
 using CarPlace.Data.Models;
-using CarPlace.Models.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
-using static System.Net.WebRequestMethods;
 
 namespace CarPlace.Controllers
 {
