@@ -4,6 +4,7 @@ using CarPlace.Models.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CarPlace.Controllers
 {
@@ -101,6 +102,13 @@ namespace CarPlace.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-
+        [HttpGet]
+        [Route("/cars/sorted")]
+        public async Task<IActionResult> SortedCarsByPrice()
+        {
+            var cars = await _context.Cars.OrderBy(c => c.Price).ToListAsync();
+           
+            return Ok(cars);
+        }
     }
 }
