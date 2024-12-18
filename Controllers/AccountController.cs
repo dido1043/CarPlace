@@ -2,14 +2,8 @@
 using CarPlace.Data.DTO.RequestModels;
 using CarPlace.Data.DTO.ResponseModels;
 using CarPlace.Data.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
-using NuGet.Protocol.Plugins;
-using System.Runtime.CompilerServices;
-using System.Security.Claims;
 namespace CarPlace.Controllers
 {
 

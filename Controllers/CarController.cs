@@ -1,10 +1,8 @@
 ﻿using CarPlace.Data;
 using CarPlace.Data.DTO.CarModels;
 using CarPlace.Models.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace CarPlace.Controllers
 {
