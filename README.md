@@ -22,6 +22,14 @@ Admin can:
 
 -Add, Edit, or Delete car features.
 
+Technologies used for this project: 
+
+-ASP.NET Web.API(.NET 8)
+
+-Entity Framework Core
+
+-MSSQL 
+
 
 
 CarPlace Db diagram
