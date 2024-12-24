@@ -26,6 +26,8 @@ Technologies used for this project:
 
 -ASP.NET Web.API(.NET 8)
 
+-ASP.NET Core Identity
+
 -Entity Framework Core
 
 -MSSQL 
